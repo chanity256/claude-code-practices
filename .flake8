@@ -1,0 +1,18 @@
+[flake8]
+max-line-length = 88
+ignore = E203,E501,W503,W504,B008,D100,D101,D102,D103,D107,D400,D401,D202,D205,F401,E402,F811
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    .eggs,
+    *.egg,
+    build,
+    dist,
+    .mypy_cache,
+    .pytest_cache,
+    .tox,
+    chroma_db,
+    frontend,
+    docs
+max-complexity = 10

@@ -16,6 +16,15 @@ This application is a full-stack web application that enables users to query cou
 
 ## Installation
 
+### Quick Setup (Recommended)
+
+Run the automated setup script which installs dependencies and sets up code quality tools:
+```bash
+./scripts/dev-setup.sh
+```
+
+### Manual Setup
+
 1. **Install uv** (if not already installed)
    ```bash
    curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -27,7 +36,7 @@ This application is a full-stack web application that enables users to query cou
    ```
 
 3. **Set up environment variables**
-   
+
    Create a `.env` file in the root directory:
    ```bash
    ANTHROPIC_API_KEY=your_anthropic_api_key_here
@@ -53,4 +62,30 @@ uv run uvicorn app:app --reload --port 8000
 The application will be available at:
 - Web Interface: `http://localhost:8000`
 - API Documentation: `http://localhost:8000/docs`
+
+## Development
+
+### Code Quality Tools
+
+This project includes comprehensive code quality tools:
+
+- **Black**: Automatic code formatting
+- **isort**: Import statement organization
+- **flake8**: Code linting and style checking
+- **mypy**: Static type checking
+
+### Development Commands
+
+```bash
+# Format all code
+./scripts/format-code.sh
+
+# Run quality checks
+./scripts/check-quality.sh
+
+# Install development dependencies
+uv sync --group dev
+```
+
+For detailed development instructions, see [DEVELOPMENT.md](DEVELOPMENT.md).
 
