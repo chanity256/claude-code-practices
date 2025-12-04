@@ -1,5 +1,7 @@
 # Course Materials RAG System
 
+来自https://learn.deeplearning.ai/courses/claude-code-a-highly-agentic-coding-assistant 课程的练习项目。
+
 A Retrieval-Augmented Generation (RAG) system designed to answer questions about course materials using semantic search and AI-powered responses.
 
 ## Overview
@@ -88,4 +90,3 @@ uv sync --group dev
 ```
 
 For detailed development instructions, see [DEVELOPMENT.md](DEVELOPMENT.md).
-
