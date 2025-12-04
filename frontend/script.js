@@ -5,7 +5,7 @@ const API_URL = '/api';
 let currentSessionId = null;
 
 // DOM elements
-let chatMessages, chatInput, sendButton, totalCourses, courseTitles;
+let chatMessages, chatInput, sendButton, totalCourses, courseTitles, newChatButton;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -15,8 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
     sendButton = document.getElementById('sendButton');
     totalCourses = document.getElementById('totalCourses');
     courseTitles = document.getElementById('courseTitles');
-    
+    newChatButton = document.getElementById('newChatButton');
+
     setupEventListeners();
+    setupNewChatButton();
     createNewSession();
     loadCourseStats();
 });
@@ -38,6 +40,36 @@ function setupEventListeners() {
             sendMessage();
         });
     });
+}
+
+// Setup New Chat Button
+function setupNewChatButton() {
+    if (!newChatButton) return;
+
+    newChatButton.addEventListener('click', handleNewChat);
+
+    // Add keyboard support (Enter and Space)
+    newChatButton.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleNewChat();
+        }
+    });
+}
+
+// Handle New Chat
+function handleNewChat() {
+    // Clear current session
+    currentSessionId = null;
+
+    // Clear chat messages
+    chatMessages.innerHTML = '';
+
+    // Add welcome message back
+    addMessage('Welcome to Course Materials Assistant! I can help you with questions about courses, lessons and specific content. What would you like to know?', 'assistant', null, true);
+
+    // Focus on input for new conversation
+    chatInput.focus();
 }
 
 
@@ -122,10 +154,29 @@ function addMessage(content, type, sources = null, isWelcome = false) {
     let html = `<div class="message-content">${displayContent}</div>`;
     
     if (sources && sources.length > 0) {
+        const sourcesList = sources.map((source, index) => {
+            // Parse source format like "Course Name - Lesson X"
+            const parts = source.split(' - ');
+            const courseName = parts[0] || source;
+            const lessonInfo = parts[1] || '';
+
+            return `
+                <li>
+                    <span class="source-number">${index + 1}</span>
+                    <strong>${courseName}</strong>
+                    ${lessonInfo ? `<em>${lessonInfo}</em>` : ''}
+                </li>
+            `;
+        }).join('');
+
         html += `
             <details class="sources-collapsible">
-                <summary class="sources-header">Sources</summary>
-                <div class="sources-content">${sources.join(', ')}</div>
+                <summary>Sources</summary>
+                <div class="sources-content">
+                    <ul>
+                        ${sourcesList}
+                    </ul>
+                </div>
             </details>
         `;
     }
